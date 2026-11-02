@@ -1,0 +1,77 @@
+create database AZS
+use AZS
+
+create table Roles
+(
+roles_id int primary key identity (1,1),
+role_name nvarchar (15)
+)
+
+ALTER TABLE Users ALTER COLUMN [Роль] int NOT NULL;
+ALTER TABLE Users ADD CONSTRAINT new_PK primary key ([ID_Пользователя]);
+ALTER TABLE [AZS].[dbo].[АZС] ADD CONSTRAINT new_PK2 primary key ([ID_АЗС]);
+ALTER TABLE Sales ADD CONSTRAINT new_PK3 primary key ([ID_Продажи]);
+ALTER TABLE Fuel ADD CONSTRAINT new_PK4 primary key ([ID_Топлива]);
+
+ALTER TABLE Users
+ADD CONSTRAINT kkk
+FOREIGN KEY ([Роль]) 
+REFERENCES Roles([roles_id]);
+
+drop table Adress
+
+create table Rezhim
+(
+add_id int primary key identity (1,1),
+add_name nvarchar(max)
+)
+
+ALTER TABLE [AZS].[dbo].[АZС] ALTER COLUMN [Режим_работы] int NOT NULL;
+ALTER TABLE [AZS].[dbo].[АZС]
+ADD CONSTRAINT nnn
+FOREIGN KEY ([Режим_работы]) 
+REFERENCES Rezhim([add_id]);
+
+create table Class
+(
+C_id int primary key identity (1,1),
+C_name nvarchar (15)
+)
+
+ALTER TABLE Fuel ALTER COLUMN [Класс_Экологичности] int NOT NULL;
+ALTER TABLE Fuel
+ADD CONSTRAINT mmm
+FOREIGN KEY ([Класс_Экологичности]) 
+REFERENCES Class([C_id]);
+
+create table paid
+(
+p_id int primary key identity (1,1),
+p_name nvarchar (15)
+)
+
+ALTER TABLE Sales ALTER COLUMN [Способ_Оплаты] int NOT NULL;
+ALTER TABLE Sales ALTER COLUMN [ID_Продавца] int NOT NULL;
+ALTER TABLE Sales ALTER COLUMN [ID_Покупателя] int NOT NULL;
+ALTER TABLE Sales ALTER COLUMN [ID_Топлива] int NOT NULL;
+ALTER TABLE Sales ALTER COLUMN [ID_АЗС] int NOT NULL;
+
+ALTER TABLE Sales
+ADD CONSTRAINT rrr
+FOREIGN KEY ([ID_Продавца]) 
+REFERENCES Users([ID_Пользователя]);
+
+ALTER TABLE Sales
+ADD CONSTRAINT ddd
+FOREIGN KEY ([ID_Покупателя]) 
+REFERENCES Users([ID_Пользователя]);
+
+ALTER TABLE Sales
+ADD CONSTRAINT okak
+FOREIGN KEY ([Способ_Оплаты]) 
+REFERENCES Paid([p_name]);
+
+ALTER TABLE Sales
+ADD CONSTRAINT mda
+FOREIGN KEY ([ID_АЗС]) 
+REFERENCES [AZS].[dbo].[AZC]([ID_АЗС]);
